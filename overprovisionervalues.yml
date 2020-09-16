@@ -1,0 +1,31 @@
+priorityClassOverprovision:
+  name: overprovisioning
+  value: -1
+priorityClassDefault:
+  enabled: true
+  name: default
+  value: 0
+image:
+  repository: k8s.gcr.io/pause
+  tag: 3.1
+  pullPolicy: IfNotPresent
+deployments: 
+   - name: spot
+     replicaCount: 1
+     nodeSelector: 
+        lifecycle: Ec2Spot
+        intent: apps
+     resources: 
+       requests:
+          memory: "512Mi"
+          cpu: "1"
+       limits:
+          memory: "512Mi"
+          cpu: "1"
+     tolerations: 
+      - key: "spotInstance" 
+        operator: "Equal" 
+        value: "true" 
+        effect: "PreferNoSchedule" 
+     labels: 
+       app: overprovisioner

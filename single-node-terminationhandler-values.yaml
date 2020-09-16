@@ -1,0 +1,13 @@
+# nodeSelector tells both linux and windows deployments where to place the amazon-ec2-metadata-mock pods
+# By default, this value is empty and every node will receive a pod.
+nodeSelector:
+  alpha.eksctl.io/instance-id: {PUT YOUR INSTANCE ID HERE}
+  
+instanceMetadataURL: http://amazon-ec2-metadata-mock-service.default.svc.cluster.local:1338
+
+# tolerations specify taints that a pod tolerates so that it can be scheduled to a node with that taint
+tolerations:
+- key: "spotInstance" 
+  operator: "Equal" 
+  value: "true" 
+  effect: "PreferNoSchedule" 
